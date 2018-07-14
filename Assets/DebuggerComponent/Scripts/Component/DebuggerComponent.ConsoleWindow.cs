@@ -18,7 +18,6 @@ namespace UnityGameFramework.Runtime
         [Serializable]
         private sealed partial class ConsoleWindow : IDebuggerWindow
         {
-            private SettingComponent m_SettingComponent = null;
             private LinkedList<LogNode> m_Logs = new LinkedList<LogNode>();
             private Vector2 m_LogScrollPosition = Vector2.zero;
             private Vector2 m_StackScrollPosition = Vector2.zero;
@@ -232,19 +231,13 @@ namespace UnityGameFramework.Runtime
 
             public void Initialize(params object[] args)
             {
-                m_SettingComponent = GameEntry.GetComponent<SettingComponent>();
-                if (m_SettingComponent == null)
-                {
-                    Log.Fatal("Setting component is invalid.");
-                    return;
-                }
 
                 Application.logMessageReceived += OnLogMessageReceived;
-                m_LockScroll = m_LastLockScroll = m_SettingComponent.GetBool("Debugger.Console.LockScroll", true);
-                m_InfoFilter = m_LastInfoFilter = m_SettingComponent.GetBool("Debugger.Console.InfoFilter", true);
-                m_WarningFilter = m_LastWarningFilter = m_SettingComponent.GetBool("Debugger.Console.WarningFilter", true);
-                m_ErrorFilter = m_LastErrorFilter = m_SettingComponent.GetBool("Debugger.Console.ErrorFilter", true);
-                m_FatalFilter = m_LastFatalFilter = m_SettingComponent.GetBool("Debugger.Console.FatalFilter", true);
+                m_LockScroll = m_LastLockScroll = DebuggerSetting.GetBool("Debugger.Console.LockScroll", true);
+                m_InfoFilter = m_LastInfoFilter = DebuggerSetting.GetBool("Debugger.Console.InfoFilter", true);
+                m_WarningFilter = m_LastWarningFilter = DebuggerSetting.GetBool("Debugger.Console.WarningFilter", true);
+                m_ErrorFilter = m_LastErrorFilter = DebuggerSetting.GetBool("Debugger.Console.ErrorFilter", true);
+                m_FatalFilter = m_LastFatalFilter = DebuggerSetting.GetBool("Debugger.Console.FatalFilter", true);
             }
 
             public void Shutdown()
@@ -268,31 +261,31 @@ namespace UnityGameFramework.Runtime
                 if (m_LastLockScroll != m_LockScroll)
                 {
                     m_LastLockScroll = m_LockScroll;
-                    m_SettingComponent.SetBool("Debugger.Console.LockScroll", m_LockScroll);
+                    DebuggerSetting.SetBool("Debugger.Console.LockScroll", m_LockScroll);
                 }
 
                 if (m_LastInfoFilter != m_InfoFilter)
                 {
                     m_LastInfoFilter = m_InfoFilter;
-                    m_SettingComponent.SetBool("Debugger.Console.InfoFilter", m_InfoFilter);
+                    DebuggerSetting.SetBool("Debugger.Console.InfoFilter", m_InfoFilter);
                 }
 
                 if (m_LastWarningFilter != m_WarningFilter)
                 {
                     m_LastWarningFilter = m_WarningFilter;
-                    m_SettingComponent.SetBool("Debugger.Console.WarningFilter", m_WarningFilter);
+                    DebuggerSetting.SetBool("Debugger.Console.WarningFilter", m_WarningFilter);
                 }
 
                 if (m_LastErrorFilter != m_ErrorFilter)
                 {
                     m_LastErrorFilter = m_ErrorFilter;
-                    m_SettingComponent.SetBool("Debugger.Console.ErrorFilter", m_ErrorFilter);
+                    DebuggerSetting.SetBool("Debugger.Console.ErrorFilter", m_ErrorFilter);
                 }
 
                 if (m_LastFatalFilter != m_FatalFilter)
                 {
                     m_LastFatalFilter = m_FatalFilter;
-                    m_SettingComponent.SetBool("Debugger.Console.FatalFilter", m_FatalFilter);
+                    DebuggerSetting.SetBool("Debugger.Console.FatalFilter", m_FatalFilter);
                 }
             }
 

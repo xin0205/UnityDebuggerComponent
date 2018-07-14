@@ -50,5 +50,7 @@ namespace GameFramework.Debugger
         /// <param name="path">调试窗口路径。</param>
         /// <returns>是否成功选中调试窗口。</returns>
         bool SelectDebuggerWindow(string path);
+
+        void Update(float elapseSeconds, float realElapseSeconds);
     }
 }

@@ -210,7 +210,7 @@ namespace GameFramework.Debugger
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    throw new GameFrameworkException("Path is invalid.");
+                    throw new System.Exception("Path is invalid.");
                 }
 
                 int pos = path.IndexOf('/');
@@ -218,7 +218,7 @@ namespace GameFramework.Debugger
                 {
                     if (InternalGetDebuggerWindow(path) != null)
                     {
-                        throw new GameFrameworkException("Debugger window has been registered.");
+                        throw new System.Exception("Debugger window has been registered.");
                     }
 
                     m_DebuggerWindows.Add(new KeyValuePair<string, IDebuggerWindow>(path, debuggerWindow));
@@ -233,7 +233,7 @@ namespace GameFramework.Debugger
                     {
                         if (InternalGetDebuggerWindow(debuggerWindowGroupName) != null)
                         {
-                            throw new GameFrameworkException("Debugger window has been registered, can not create debugger window group.");
+                            throw new System.Exception("Debugger window has been registered, can not create debugger window group.");
                         }
 
                         debuggerWindowGroup = new DebuggerWindowGroup();

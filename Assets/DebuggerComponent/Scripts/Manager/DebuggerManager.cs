@@ -10,7 +10,7 @@ namespace GameFramework.Debugger
     /// <summary>
     /// 调试管理器。
     /// </summary>
-    internal sealed partial class DebuggerManager : GameFrameworkModule, IDebuggerManager
+    internal sealed partial class DebuggerManager : IDebuggerManager
     {
         private readonly DebuggerWindowGroup m_DebuggerWindowRoot;
         private bool m_ActiveWindow;
@@ -28,13 +28,13 @@ namespace GameFramework.Debugger
         /// 获取游戏框架模块优先级。
         /// </summary>
         /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-        internal override int Priority
-        {
-            get
-            {
-                return -1;
-            }
-        }
+        //internal override int Priority
+        //{
+        //    get
+        //    {
+        //        return -1;
+        //    }
+        //}
 
         /// <summary>
         /// 获取或设置调试窗口是否激活。
@@ -67,7 +67,7 @@ namespace GameFramework.Debugger
         /// </summary>
         /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        internal override void Update(float elapseSeconds, float realElapseSeconds)
+        public void Update(float elapseSeconds, float realElapseSeconds)
         {
             if (!m_ActiveWindow)
             {
@@ -80,7 +80,7 @@ namespace GameFramework.Debugger
         /// <summary>
         /// 关闭并清理调试管理器。
         /// </summary>
-        internal override void Shutdown()
+        internal void Shutdown()
         {
             m_ActiveWindow = false;
             m_DebuggerWindowRoot.Shutdown();
@@ -96,12 +96,12 @@ namespace GameFramework.Debugger
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new GameFrameworkException("Path is invalid.");
+                throw new System.Exception("Path is invalid.");
             }
 
             if (debuggerWindow == null)
             {
-                throw new GameFrameworkException("Debugger window is invalid.");
+                throw new System.Exception("Debugger window is invalid.");
             }
 
             m_DebuggerWindowRoot.RegisterDebuggerWindow(path, debuggerWindow);
